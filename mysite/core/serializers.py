@@ -10,6 +10,6 @@ class FilmSerializer(TaggitSerializer, serializers.ModelSerializer):
     
     class Meta:
         model = Film
-        fields = ('id', 'name', 'director',)
+        fields = ('id', 'name', 'director', 'tags',)
 
         
