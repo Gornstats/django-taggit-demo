@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     
     # 3rd party
     'taggit',
+    'rest_framework',
     
     # local
     'core',
