@@ -2,27 +2,31 @@
 
 {% block content %} 
 
-<div class="m-6" x-data="{tag: '', films: []}"
+<div class="m-6" x-data="{tag: 'ALL', films: []}"
     x-init="films = await (await fetch('/film-list/')).json()">
 
     <p x-text="tag"></p>
 
      <p>
-        {% for tag in tags %}
+        {% for dj_tag in tags %}
             <button type="button" 
             class="rounded inline-block px-6 py-2.5 bg-blue-600 text-white font-medium 
                 text-xs leading-tight uppercase hover:bg-blue-700 focus:bg-blue-700 
                 focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 
                 ease-in-out mr-1"
-            @click="tag = $el.textContent">
-                    {{tag.name}}
-            </button>
+            @click="tag = $el.textContent">{{dj_tag.name}}</button>
         {% endfor %}
+        <button type="button" 
+        class="rounded inline-block px-6 py-2.5 bg-blue-600 text-white font-medium 
+            text-xs leading-tight uppercase hover:bg-blue-700 focus:bg-blue-700 
+            focus:outline-none focus:ring-0 active:bg-blue-800 transition duration-150 
+            ease-in-out mr-1"
+        @click="tag = $el.textContent">ALL</button>
     </p>
     <br/>
 
     <!-- list films in alpine x-data object, filtered by selected tag (using arrow function) -->
-    <template x-for="film in films.filter(f => f.tags.includes(tag))">
+    <template x-for="film in films.filter(f => tag === 'ALL' || f.tags.includes(tag))">
 
         <a href="#" class="block p-6 max-w-sm bg-white rounded-lg border border-gray-200 
             shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 
@@ -31,7 +35,7 @@
                     x-text="film.name"></h5>
                 <p class="font-normal text-gray-700 dark:text-gray-400" 
                     x-text="'Director: ' + film.director"></p>
-                <small x-text="film.tags.join(', ')"></small>      
+                <small x-text="film.tags.join(', ')"></small>
         </a>
 
     </template>
